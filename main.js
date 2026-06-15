@@ -1,3 +1,9 @@
+let humanScore = 0;
+let computerScore = 0;
+const humanRes = document.querySelector("#h-result");
+const computerRes = document.querySelector("#c-result");
+const endRes = document.querySelector("#end-result");
+
 function getComputerChoice() {
   const choice = Math.random();
   if (choice < (1/3)) {
@@ -9,13 +15,25 @@ function getComputerChoice() {
   }
 }
 
-function getHumanChoice() {
-  const choice = prompt("Choose: ");
-  const formattedChoice = choice.charAt(0).toUpperCase() + choice.slice(1).toLowerCase();
-  return formattedChoice;
+function updateEndRes() {
+  let winMsg;
+  if (humanScore > computerScore) {
+    winMsg = "Winner: Human";
+  } else {
+    winMsg = "Winner: Computer";
+  }
+  endRes.textContent = `${winMsg}\n` +
+  `Final Score: Human - ${humanScore} | Computer - ${computerScore}`;
 }
 
-function playRound(humanChoice, computerChoice) {
+function updateCurrentRes() {
+  humanRes.textContent = humanScore;
+  computerRes.textContent = computerScore;
+}
+
+function playRound(event) {
+  const computerChoice = getComputerChoice();
+  const humanChoice = event.target.textContent;
   if (humanChoice === computerChoice) {
     console.log(`Draw! Computer chose ${computerChoice} as well.`);
   } else if (
@@ -24,45 +42,16 @@ function playRound(humanChoice, computerChoice) {
     humanChoice === "Scissors" && computerChoice === "Paper"
   ) {
     console.log(`You win! ${humanChoice} beats ${computerChoice}.`);
-    return "win";
+    humanScore++;
   } else {
     console.log(`You lose! ${computerChoice} beats ${humanChoice}.`);
-    return "lose";
+    computerScore++;
   }
-}
-
-function playGame() {
-  const hRes = document.querySelector("#h-result");
-  const cRes = document.querySelector("#c-result");
-  let humanScore = 0;
-  let computerScore = 0;
-  while (humanScore < 5 && computerScore < 5) {
-    hRes.textContent = humanScore;
-    cRes.textContent = computerScore;
-    const computerChoice = getComputerChoice();
-    const humanChoice = getHumanChoice();
-    const round = playRound(humanChoice, computerChoice);
-    switch (round) {
-      case "win":
-        humanScore++;
-        break;
-      case "lose":
-        computerScore++;
-        break;
-      default:
-        break;
-    }
+  updateCurrentRes();
+  if (humanScore == 5 || computerScore == 5) {
+    updateEndRes();
+    goToPage("end");
   }
-  let winMsg;
-  if (humanScore > computerScore) {
-    winMsg = "Winner: Human";
-  } else {
-    winMsg = "Winner: Computer";
-  }
-  console.log(
-    `${winMsg}\n` +
-    `Final Score: Human - ${humanScore} | Computer - ${computerScore}`
-  );
 }
 
 function goToPage(toPage) {
@@ -76,8 +65,6 @@ function goToPage(toPage) {
   })
 }
 
-///////////////////////////////////////////////
-
 goToPage("start");
 
 const playBtn = document.querySelector("#play-btn");
@@ -85,4 +72,13 @@ playBtn.addEventListener("click", () => {
   goToPage("playing");
 });
 
-// playGame();
+const playerBtns = document.querySelector("#player-buttons");
+playerBtns.addEventListener("click", playRound);
+
+const playAgainBtn = document.querySelector("#play-again-btn");
+playAgainBtn.addEventListener("click", () => {
+  humanScore = 0;
+  computerScore = 0;
+  updateCurrentRes();
+  goToPage("playing");
+})
