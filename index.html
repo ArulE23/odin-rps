@@ -6,6 +6,25 @@
   <title>Document</title>
 </head>
 <body>
+  <div class="page start">
+    <h1>RPS: Human vs Computer</h1>
+    <button id="play-btn">PLAY</button>
+  </div>
+  <div class="page playing">
+    <div id="current-result">
+      <span>Human: <span id="h-result"></span> | <span>
+      <span>Computer: <span id="c-result"></span></span>
+    </div>
+    <div id="player-buttons">
+      <button class="rock">Rock</button>
+      <button class="paper">Paper</button>
+      <button class="scissors">Scissors</button>
+    </div>
+  </div>
+  <div class="page end">
+    <span id="end-result"></span>
+    <button id="play-again-btn">PLAY AGAIN</button>
+  </div>
   <script src="./main.js"></script>
 </body>
 </html>

@@ -32,9 +32,13 @@ function playRound(humanChoice, computerChoice) {
 }
 
 function playGame() {
+  const hRes = document.querySelector("#h-result");
+  const cRes = document.querySelector("#c-result");
   let humanScore = 0;
   let computerScore = 0;
-  for (let i = 0; i < 5; i++) {
+  while (humanScore < 5 && computerScore < 5) {
+    hRes.textContent = humanScore;
+    cRes.textContent = computerScore;
     const computerChoice = getComputerChoice();
     const humanChoice = getHumanChoice();
     const round = playRound(humanChoice, computerChoice);
@@ -50,9 +54,7 @@ function playGame() {
     }
   }
   let winMsg;
-  if (humanScore === computerScore) {
-    winMsg = "Draw! No one wins!";
-  } else if (humanScore > computerScore) {
+  if (humanScore > computerScore) {
     winMsg = "Winner: Human";
   } else {
     winMsg = "Winner: Computer";
@@ -63,4 +65,24 @@ function playGame() {
   );
 }
 
-playGame();
+function goToPage(toPage) {
+  const pages = document.querySelectorAll(".page");
+  pages.forEach((page) => {
+    if (page.classList.contains(toPage)) {
+      page.style.display = "block";
+    } else {
+      page.style.display = "none";
+    }
+  })
+}
+
+///////////////////////////////////////////////
+
+goToPage("start");
+
+const playBtn = document.querySelector("#play-btn");
+playBtn.addEventListener("click", () => {
+  goToPage("playing");
+});
+
+// playGame();
