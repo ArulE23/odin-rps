@@ -2,7 +2,10 @@ let humanScore = 0;
 let computerScore = 0;
 const humanRes = document.querySelector("#h-result");
 const computerRes = document.querySelector("#c-result");
+const winner = document.querySelector("#winner");
 const endRes = document.querySelector("#end-result");
+
+/////////////////////////////////////////////////////////////////
 
 function getComputerChoice() {
   const choice = Math.random();
@@ -16,14 +19,8 @@ function getComputerChoice() {
 }
 
 function updateEndRes() {
-  let winMsg;
-  if (humanScore > computerScore) {
-    winMsg = "Winner: Human";
-  } else {
-    winMsg = "Winner: Computer";
-  }
-  endRes.textContent = `${winMsg}\n` +
-  `Final Score: Human - ${humanScore} | Computer - ${computerScore}`;
+  winner.textContent = (humanScore > computerScore) ? "Winner: Human" : "Winner: Computer";
+  endRes.textContent = `Final Score: Human - ${humanScore} | Computer - ${computerScore}`;
 }
 
 function updateCurrentRes() {
@@ -58,12 +55,14 @@ function goToPage(toPage) {
   const pages = document.querySelectorAll(".page");
   pages.forEach((page) => {
     if (page.classList.contains(toPage)) {
-      page.style.display = "block";
+      page.style.display = "flex";
     } else {
       page.style.display = "none";
     }
   })
 }
+
+/////////////////////////////////////////////////////////////////
 
 goToPage("start");
 
