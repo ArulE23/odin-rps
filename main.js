@@ -1,7 +1,8 @@
 let humanScore = 0;
 let computerScore = 0;
-const humanRes = document.querySelector("#h-result");
-const computerRes = document.querySelector("#c-result");
+const roundRes = document.querySelector("#round-result");
+const humanRes = document.querySelector("#human-result");
+const computerRes = document.querySelector("#computer-result");
 const winner = document.querySelector("#winner");
 const endRes = document.querySelector("#end-result");
 
@@ -32,20 +33,21 @@ function playRound(event) {
   const computerChoice = getComputerChoice();
   const humanChoice = event.target.textContent;
   if (humanChoice === computerChoice) {
-    console.log(`Draw! Computer chose ${computerChoice} as well.`);
+    roundRes.textContent = `Draw! Computer chose ${computerChoice} as well.`;
   } else if (
     humanChoice === "Rock" && computerChoice === "Scissors" ||
     humanChoice === "Paper" && computerChoice === "Rock" ||
     humanChoice === "Scissors" && computerChoice === "Paper"
   ) {
-    console.log(`You win! ${humanChoice} beats ${computerChoice}.`);
+    roundRes.textContent = `You win! ${humanChoice} beats ${computerChoice}.`;
     humanScore++;
   } else {
-    console.log(`You lose! ${computerChoice} beats ${humanChoice}.`);
+    roundRes.textContent = `You lose! ${computerChoice} beats ${humanChoice}.`;
     computerScore++;
   }
   updateCurrentRes();
   if (humanScore == 5 || computerScore == 5) {
+    roundRes.textContent = "Begin!";
     updateEndRes();
     goToPage("end");
   }
